@@ -16,3 +16,5 @@ position on the key pad. Although this limits the number of passwords,
 it is not the main concern, because my phone already has a password, it
 is to prevent myself from easily remembering it.
 
+This script automates creating new passwords, and stores it in a place
+that is inaccessible enough to dig it up unless there's something important.
