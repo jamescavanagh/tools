@@ -1,8 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+"""
+A script to increase my focus, by creating dificult to rememeber
+Four digit passwords for my iphone's screen time
 
+This is to limit the use of social media, streaming services, ect.
+to certain times of the day
+"""
 
 import numpy as np 
 
@@ -21,7 +26,9 @@ def create_passcode():
         if firstDigit == True:
             nextDigit = int(np.random.choice(numbers))
             firstDigit == False
-            
+        
+        # Based on the first digit, dificult to remember numbers 
+        # are chosen that are not adjacent on the keypad
         if nextDigit == 0:
             splice = numbers[0:7]
         elif nextDigit == 4:
@@ -41,10 +48,15 @@ def create_passcode():
         passcode += str(nextDigit)
     return passcode
 
+
 def checkIfDuplicates(passcode):
     
     
-    ''' Check if given list contains any duplicates '''
+    ''' Checks if the password  contains any duplicates numbers
+    This is because having the same number repeted makes it more 
+    simple to remember after entering it a few times
+
+    '''
     listOfElems = [char for char in passcode]
 
     
@@ -52,6 +64,8 @@ def checkIfDuplicates(passcode):
         return False
     else:
         return True
+
+## Begin Script #############################
 
 hasDuplicates = True
 
@@ -66,7 +80,5 @@ f.close()
 
 print(passcode)
     
-
-
 exit()
 
