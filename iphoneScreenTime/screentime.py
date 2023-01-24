@@ -19,35 +19,43 @@ from sys import exit
 
 def create_passcode():
 
-    firstDigit = True
+    isFirstDigit = True
     passcode = ''
+
     for i in range(4):
 
-        if firstDigit == True:
-            nextDigit = int(np.random.choice(numbers))
-            firstDigit == False
+        if isFirstDigit == True:
+            passcode = passcode + str(int(np.random.choice(numbers)))
+            isFirstDigit == False
+            continue
         else:
-            nextDigit = passcode[-1:]
+            preceedingDigit  = passcode[-1:]
         
-        # Based on the first digit, dificult to remember numbers 
-        # are chosen that are not adjacent on the keypad
-        if nextDigit == 0:
-            splice = numbers[0:7]
-        elif nextDigit == 4:
+        # In order to generate a password that is 
+        # Difficult to memorize 
+        # This code selects non-adjacent digits on a number pad
+
+        if preceedingDigit == 0:
+            splice = [1,2,3,4,5,6]
+        elif preceedingDigit == 4:
+            #Right column
             splice = [3,6,9,0]
-        elif nextDigit == 5:
+        elif preceedingDigit == 5:
+            # Numbers on diagonals
             splice = [0,1,3,7,9]
-        elif nextDigit == 6:
+        elif preceedingDigit == 6:
+            # Numers on right column
             splice = [1,4,7,0]
         
-        elif 1 <= nextDigit < 4:
-            splice = numbers[6:]
-        elif 6 < nextDigit <= 9:
-            splice = numbers[0:3]
+        elif 1 <= preceedingDigit < 4:
+            splice = [7,8,9,0]
+        elif 7 < preceedingDigit <= 9:
+            splice = [1,2,3]
 
-        nextDigit = np.random.choice(splice)
+        nextDigitInPassword  = np.random.choice(splice)
         
-        passcode += str(nextDigit)
+        passcode += str(NextDigitInPassword)
+    
     return passcode
 
 
