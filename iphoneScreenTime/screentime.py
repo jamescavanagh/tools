@@ -1,106 +1,54 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-"""
-A script to increase my focus, by creating dificult to rememeber
-Four digit passwords for my iphone's screen time
-
-This is to limit the use of social media, streaming services, ect.
-to certain times of the day
-"""
-
-import numpy as np 
-
-
-numbers = np.array([1,2,3,4,5,6,7,8,9,0])
-
-
+import random
 from sys import exit
 
-def create_passcode():
 
-    isFirstDigit = True
-    passcode = ''
+def choose_first_digit():
+    # no 1 or 2 because I assosiate them with years so they're easy to remember
+    return str(random.choice([0,3,4,5,6,7,8,9]))
 
-    for i in range(4):
-
-        if isFirstDigit == True:
-            passcode = passcode + str(int(np.random.choice(numbers)))
-            isFirstDigit == False
-            continue
-        else:
-            preceedingDigit  = passcode[-1:]
-        
-        # In order to generate a password that is 
-        # Difficult to memorize 
-        # This code selects non-adjacent digits on a number pad
-
-        if preceedingDigit == 0:
-            splice = [1,2,3,4,5,6]
-        elif preceedingDigit == 4:
-            #Right column
-            splice = [3,6,9,0]
-        elif preceedingDigit == 5:
-            # Numbers on diagonals
-            splice = [0,1,3,7,9]
-        elif preceedingDigit == 6:
-            # Numers on right column
-            splice = [1,4,7,0]
-        
-        elif 1 <= preceedingDigit < 4:
-            splice = [7,8,9,0]
-        elif 7 < preceedingDigit <= 9:
-            splice = [1,2,3]
-
-        nextDigitInPassword  = np.random.choice(splice)
-        
-        passcode += str(NextDigitInPassword)
+def zero():
+    return [1,2,3,4,5,6]
+def one_three():
+    return [7,8,9,0]
+def four():
+    return [3,6,9,0]
+def five():
+    return [0,1,3,7,9]
+def six():
+    return [1,4,7,0]
+def seven_nine():
+    return [1,2,3]
     
-    return passcode
+switcher = {
+    '0':zero(),
+    '1':one_three(),
+    '2':one_three(),
+    '3':one_three(),
+    '4':four(),
+    '5':five(),
+    '6':six(),
+    '7':seven_nine(),
+    '8':seven_nine(),
+    '9':seven_nine()
+}
 
-
-def check_for_repeating_numbers(passcode):
+def choose_next(digit,pw):
+    pw = [int(d) for d in list(pw)]
+    choices = switcher[digit]
+    #remove repeating
+    choices = [d for d in choices if d not in pw]
     
-    
-    ''' Checks if the password  contains any duplicates numbers
-    This is because having the same number repeted makes it more 
-    simple to remember after entering it a few times
 
-    '''
-    listOfElems = [char for char in passcode]
+    return str(random.choice(choices))
+def main():
+    passcode = choose_first_digit()
+    for i in range(3):
+        passcode += choose_next(passcode[-1],passcode)
+    print(passcode)
+    f = open("screentimePass.txt","w")
+    f.write(passcode)
+    f.close()
 
-    # Comparing the elements of the list
-    if len(listOfElems) == len(set(listOfElems)):
-        return False
-    else:
-        return True
-
-def check_for_year(passcode):
-    #Prevents me from associating the password
-    # With a historical event
-
-    if int(passcode) < 2100:
-        return True
-    else:
-        return False
-
-## Begin Script #############################
-
-hasRepeating = True
-resemblesYear = True
-
-while (hasRepeating == True) or  (resemblesYear == True):
-    passcode = create_passcode()
-    
-    hasRepeating = check_for_repeating_numbers(passcode)
-    resemblesYear = check_for_year(passcode)
-
-
-f = open("screentimePass.txt", "w")
-f.write(passcode)
-f.close()
-
-print(passcode)
-    
-exit()
-
+while True:
+    main()
+    exit()
